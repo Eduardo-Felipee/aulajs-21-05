@@ -1,0 +1,161 @@
+class Paciente {
+    static contadorID = 0;
+
+    constructor(nome, login, senha, endereco, tipoSanguineo, altura, peso) {
+        this._id = ++Paciente.contadorID;
+        this._nome = nome;
+        this._login = login;
+        this._senha = senha;
+        this._endereco = endereco;
+        this._tipoSanguineo = tipoSanguineo;
+        this._altura = altura; 
+        this._peso = peso;
+    }
+
+    
+}
+
+
+    getId() 
+        return this._id;
+    
+    getNome() {
+        return this._nome;
+    }
+
+    getLogin() {
+        return this._login;
+    }
+
+    getSenha() {
+        return this._senha;
+    }
+
+    getEndereco() {
+        return this._endereco;
+    }
+
+    getTipoSanguineo() {
+        return this._tipoSanguineo;
+    }
+
+    getAltura() {
+        return this._altura;
+    }
+
+    getPeso() {
+        return this._peso;
+    }
+
+    setNome(nome) {
+        this._nome = nome;
+    }
+
+    setLogin(login) {
+        this._login = login;
+    }
+
+    setSenha(senha) {
+        this._senha = senha;
+    }
+
+    setEndereco(endereco) {
+        this._endereco = endereco;
+    }
+
+    setTipoSanguineo(tipoSanguineo) {
+        this._tipoSanguineo = tipoSanguineo;
+    }
+
+    setAltura(altura) {
+        this._altura = altura;
+    }
+
+    setPeso(peso) {
+        this._peso = peso;
+    }
+
+    static criarPacienteComPrompt() {
+        const nome = prompt("Informe o nome do paciente:");
+        const login = prompt("Informe o login do paciente:");
+        const senha = prompt("Informe a senha do paciente:");
+        const endereco = prompt("Informe o endereço do paciente:");
+        const tipoSanguineo = prompt("Informe o tipo sanguíneo do paciente:");
+        const altura = prompt("Informe a altura do paciente:");
+        const peso = prompt("Informe o peso do paciente:");
+        return new Paciente(nome, login, senha, endereco, tipoSanguineo, altura, peso);
+    }
+
+    mostrarInformacoes() {
+    console.log(`ID: ${this._id}`); // Use this._id ao invés de this.getId()
+    console.log(`Nome: ${this._nome}`);
+    console.log(`Login: ${this._login}`);
+    console.log(`Senha: ${this._senha}`);
+    console.log(`Endereço: ${this._endereco}`);
+    console.log(`Tipo Sanguíneo: ${this._tipoSanguineo}`);
+    console.log(`Altura: ${this._altura}`);
+    console.log(`Peso: ${this._peso}`);
+}
+
+
+    atualizarInformacoes() {
+        const tipoSanguineo = prompt("Informe o novo tipo sanguíneo do paciente:");
+        const altura = prompt("Informe a nova altura do paciente:");
+        const peso = prompt("Informe o novo peso do paciente:");
+        this.setTipoSanguineo(tipoSanguineo);
+        this.setAltura(altura);
+        this.setPeso(peso);
+    }
+}
+
+function exibirMenu() {
+    console.log("=== Menu ===");
+    console.log("1. Mostrar informações dos pacientes");
+    console.log("2. Cadastrar um novo paciente");
+    console.log("3. Atualizar informações de um paciente");
+    console.log("4. Sair");
+}
+
+const pacientes = [];
+
+let sair = false;
+while (!sair) {
+    exibirMenu();
+    const opcao = parseInt(prompt("Selecione uma opção:"));
+
+    switch (opcao) {
+        case 1:
+            console.log("=== Informações dos Pacientes ===");
+            pacientes.forEach(paciente => {
+                console.log(`Paciente ID: ${paciente.getId()}`);
+                paciente.mostrarInformacoes();
+                console.log("=============================");
+            });
+            break;
+        case 2:
+            console.log("=== Cadastro de Novo Paciente ===");
+            const novoPaciente = Paciente.criarPacienteComPrompt();
+            pacientes.push(novoPaciente);
+            console.log("Paciente cadastrado com sucesso!");
+            break;
+        case 3:
+            console.log("=== Atualização de Informações do Paciente ===");
+            const pacienteID = parseInt(prompt("Informe o ID do paciente para atualizar suas informações:"));
+            const paciente = pacientes.find(p => p.getId() === pacienteID);
+            if (paciente) {
+                console.log(`Atualizando informações do Paciente ID ${pacienteID}:`);
+                paciente.atualizarInformacoes();
+                console.log("Informações atualizadas com sucesso!");
+            } else {
+                console.log("Paciente não encontrado.");
+            }
+            break;
+        case 4:
+            console.log("Saindo...");
+            sair = true;
+            break;
+        default:
+            console.log("Opção inválida. Tente novamente.");
+            break;
+    }
+}
